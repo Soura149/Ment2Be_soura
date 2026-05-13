@@ -516,18 +516,18 @@ const LandingPage = () => {
                 track tasks, and get feedback — so you keep moving forward, one step at a time.
               </p>
 
-              <div className="mt-10 flex justify-center">
+              <div className="mt-10 flex justify-center relative z-50">
                 <Link
                   to="/login"
-                  className="inline-flex items-center justify-center px-10 py-3 rounded-full bg-[#ff6fae] text-black font-semibold shadow-[0_10px_30px_rgba(255,111,174,0.25)] hover:bg-[#ff86bb] transition-colors"
+                  onClick={(e) => e.stopPropagation()}
+                  className="inline-flex items-center justify-center px-10 py-3 rounded-full bg-[#ff6fae] text-black font-semibold shadow-[0_10px_30px_rgba(255,111,174,0.25)] hover:bg-[#ff86bb] transition-colors relative z-50"
                 >
                   I’M READY LET’S GO!
                 </Link>
+                </div>
               </div>
             </div>
           </div>
-          
-                  </div>
       </div>
 
       {/* Footer with Ment2Be Branding */}
