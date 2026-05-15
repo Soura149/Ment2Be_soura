@@ -270,7 +270,8 @@ const Login = () => {
   const showTwoColumnLayout = isRegistering;
 
   return (
-    <div className="login-bg h-screen bg-gradient-to-br from-[#000000] via-[#0a1929] to-[#001e3c] relative overflow-hidden flex flex-col lg:flex-row">
+
+     <div className="login-bg min-h-screen bg-gradient-to-br ... overflow-x-hidden flex flex-col lg:flex-row">
       {/* Animated Moon */}
       <div className="moon"></div>
 
@@ -289,10 +290,10 @@ const Login = () => {
       )}
 
       {/* Back to Landing Page Button */}
-      <button
-        onClick={() => navigate("/")}
-        className="absolute top-6 left-6 z-20 flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
-      >
+          <button
+           onClick={() => navigate("/")}
+           className="fixed top-4 left-4 md:top-6 md:left-6 z-50 flex items-center gap-2 bg-black/30 px-3 py-2 rounded-lg text-gray-300 hover:text-white transition-colors"
+         >
         <svg
           className="w-5 h-5"
           fill="none"
