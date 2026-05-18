@@ -41,7 +41,7 @@ const LandingLoader = ({ onLoadingComplete }) => {
 
   return (
     <div 
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-[#07090e] transition-opacity duration-500 ${
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-slate-50 dark:bg-[#07090e] transition-opacity duration-500 ${
         fadeOut ? 'opacity-0' : 'opacity-100'
       }`}
     >
@@ -53,7 +53,7 @@ const LandingLoader = ({ onLoadingComplete }) => {
           opacity: 0
         }}
       >
-        <p className="text-white text-sm font-medium">Welcome to Ment2Be</p>
+        <p className="text-slate-900 dark:text-white text-sm font-medium">Welcome to Ment2Be</p>
       </div>
 
       {/* Animated Background Elements */}
@@ -98,10 +98,9 @@ const LandingLoader = ({ onLoadingComplete }) => {
             <img 
               src={logo} 
               alt="Ment2Be Logo" 
-              className="relative w-20 h-20 rounded-lg shadow-2xl"
+              className="relative w-20 h-20 rounded-lg shadow-2xl dark:brightness-0 dark:invert"
               style={{
                 boxShadow: '0 0 40px rgba(99, 102, 241, 0.3)',
-                filter: 'brightness(0) invert(1)'
               }}
             />
           </div>
@@ -109,7 +108,7 @@ const LandingLoader = ({ onLoadingComplete }) => {
 
         {/* Brand Name */}
         <h1 
-          className="text-4xl font-bold text-white mb-2"
+          className="text-4xl font-bold text-slate-900 dark:text-white mb-2"
           style={{
             animation: 'slideUp 1.2s ease-out forwards',
             animationDelay: '0.4s',
@@ -142,9 +141,9 @@ const LandingLoader = ({ onLoadingComplete }) => {
       </div>
 
       {/* Bottom Progress Bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-900">
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-200 dark:bg-gray-900">
         <div 
-          className="h-full bg-white"
+          className="h-full bg-slate-900 dark:bg-white"
           style={{
             animation: 'progressBar 4s ease-in-out infinite',
             width: '100%'
@@ -200,14 +199,22 @@ const LandingLoader = ({ onLoadingComplete }) => {
         }
 
         .card {
-          --bg-color: #07090e;
+          --bg-color: rgba(255, 255, 255, 0.65);
           background-color: var(--bg-color);
           padding: 0.5rem 1.5rem;
           border-radius: 1.25rem;
+          border: 1px solid rgba(15, 23, 42, 0.10);
+          box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10), 0 4px 12px rgba(15, 23, 42, 0.06);
+        }
+
+        .dark .card {
+          --bg-color: #07090e;
+          border: none;
+          box-shadow: none;
         }
 
         .loader {
-          color: rgb(255, 255, 255);
+          color: rgb(15, 23, 42);
           font-family: "Poppins", sans-serif;
           font-weight: 500;
           font-size: 20px;
@@ -218,6 +225,10 @@ const LandingLoader = ({ onLoadingComplete }) => {
           border-radius: 8px;
           align-items: center;
           gap: 8px;
+        }
+
+        .dark .loader {
+          color: rgb(255, 255, 255);
         }
 
         .words {
@@ -246,10 +257,14 @@ const LandingLoader = ({ onLoadingComplete }) => {
           display: block;
           height: 28px;
           padding-left: 4px;
-          color: #ffffff;
+          color: #0f172a;
           animation: spin_carousel 5s infinite;
           line-height: 28px;
           white-space: nowrap;
+        }
+
+        .dark .word {
+          color: #ffffff;
         }
 
         @keyframes spin_carousel {

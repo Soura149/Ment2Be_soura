@@ -1,5 +1,4 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import './index.css';
 import LandingPageWithLoader from './pages/LandingPageWithLoader';
 import Login from './pages/Login';
@@ -42,13 +41,15 @@ import TermsOfService from "./pages/TermsOfService";
 import ScrollToTop from "./components/ScrollToTop";
 import AchievementGalleryPage from './pages/AchievementGalleryPage';
 import { AchievementNotifier } from './components/AchievementToast';
+import { useTheme } from './hooks/useTheme';
 
 function App() {
   const location = useLocation();
+  const { theme } = useTheme();
 
   return (
     <>
-      <ToastContainer position="top-center" autoClose={4000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover theme="dark" />
+      <ToastContainer position="top-center" autoClose={4000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover theme={theme} />
       <AchievementNotifier />
       {/*key forces rerender on every navigation */}
       <Routes location={location} key={location.key}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, X, Star, Zap, Target } from 'lucide-react';
+import { Trophy, X, Star } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 import { chatSocketService } from '../services/chatSocketService';
 

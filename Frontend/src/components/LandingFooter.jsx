@@ -6,7 +6,7 @@ const LandingFooter = () => {
   return (
     <footer
       id="footer"
-      className="relative z-10 bg-[#0a0a0a] border-t border-gray-800"
+      className="relative z-10 bg-white dark:bg-[#0a0a0a] border-t border-slate-200 dark:border-gray-800"
     >
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Top Section */}
@@ -17,26 +17,28 @@ const LandingFooter = () => {
               <img
                 src={logoHat}
                 alt="Ment2Be Logo"
-                className="w-8 h-8 brightness-0 invert"
+                className="w-8 h-8 dark:brightness-0 dark:invert"
               />
-              <span className="text-white text-lg font-semibold">
+              <span className="text-slate-900 dark:text-white text-lg font-semibold">
                 Ment2Be
               </span>
             </div>
-            <p className="text-gray-400 text-sm">
+            <p className="text-slate-600 dark:text-gray-400 text-sm">
               Accessible and tailored mentorship experience for everyone.
             </p>
           </div>
 
           {/* Features */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Features</h4>
+            <h4 className="text-slate-900 dark:text-white font-semibold mb-4">
+              Features
+            </h4>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="/"
                   state={{ fromNavbar: true }}
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                  className="text-slate-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white transition-colors text-sm"
                 >
                   Dashboard
                 </Link>
@@ -45,7 +47,7 @@ const LandingFooter = () => {
                 <Link
                   to="/"
                   state={{ fromNavbar: true }}
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                  className="text-slate-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white transition-colors text-sm"
                 >
                   Mentorship
                 </Link>
@@ -55,13 +57,15 @@ const LandingFooter = () => {
 
           {/* Solutions */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Solutions</h4>
+            <h4 className="text-slate-900 dark:text-white font-semibold mb-4">
+              Solutions
+            </h4>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="/solutions"
                   state={{ fromNavbar: true }}
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                  className="text-slate-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white transition-colors text-sm"
                 >
                   For Students
                 </Link>
@@ -70,7 +74,7 @@ const LandingFooter = () => {
                 <Link
                   to="/solutions"
                   state={{ fromNavbar: true }}
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                  className="text-slate-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white transition-colors text-sm"
                 >
                   For Mentors
                 </Link>
@@ -79,7 +83,7 @@ const LandingFooter = () => {
                 <Link
                   to="/solutions"
                   state={{ fromNavbar: true }}
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                  className="text-slate-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white transition-colors text-sm"
                 >
                   For Teams
                 </Link>
@@ -89,17 +93,19 @@ const LandingFooter = () => {
         </div>
 
         {/* Social Media */}
-        <div className="border-t border-gray-800 pt-8 text-center">
-          <h4 className="text-white font-semibold mb-4">Connect With Us</h4>
+        <div className="border-t border-slate-200 dark:border-gray-800 pt-8 text-center">
+          <h4 className="text-slate-900 dark:text-white font-semibold mb-4">
+            Connect With Us
+          </h4>
 
           <div className="flex justify-center space-x-6">
             {/* LinkedIn */}
             <a
-              href="https://www.linkedin.com"
+              href="https://www.linkedin.com/in/arsh-c246/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-slate-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white transition-colors"
             >
               <svg
                 className="w-6 h-6"
@@ -117,7 +123,7 @@ const LandingFooter = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-slate-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white transition-colors"
             >
               <svg
                 className="w-6 h-6"
@@ -131,8 +137,8 @@ const LandingFooter = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 pt-8 mt-8 text-center">
-          <p className="text-gray-500 text-sm">
+        <div className="border-t border-slate-200 dark:border-gray-800 pt-8 mt-8 text-center">
+          <p className="text-slate-500 dark:text-gray-500 text-sm">
             © 2026 Ment2Be. All rights reserved.
           </p>
         </div>

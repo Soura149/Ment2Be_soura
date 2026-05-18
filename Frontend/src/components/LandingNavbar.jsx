@@ -1,26 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Moon, Sun } from "lucide-react";
 import logoHat from "../assets/logo-hat.png";
+import { useTheme } from "../hooks/useTheme";
 
 const LandingNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null);
-  const [showSocialsModal, setShowSocialsModal] = useState(false);
-
-  const toggleDropdown = (dropdown) => {
-    setOpenDropdown(openDropdown === dropdown ? null : dropdown);
-  };
+  const { theme, toggleTheme } = useTheme();
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
-      setOpenDropdown(null);
     }
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-md border-b border-gray-800">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-md border-b border-slate-200 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-14 md:h-16">
           {/* Logo */}
@@ -32,10 +28,12 @@ const LandingNavbar = () => {
             <img
               src={logoHat}
               alt="Ment2Be Logo"
-              className="w-7 h-7 md:w-8 md:h-8 brightness-0 invert"
+              className="w-7 h-7 md:w-8 md:h-8 dark:brightness-0 dark:invert"
             />
 
-            <span className="text-white text-xl font-semibold">Ment2Be</span>
+            <span className="text-slate-900 dark:text-white text-xl font-semibold">
+              Ment2Be
+            </span>
           </Link>
 
           {/* Navigation Links */}
@@ -45,7 +43,7 @@ const LandingNavbar = () => {
               <Link
                 to="/"
                 state={{ fromNavbar: true }}
-                className="px-4 py-2 text-gray-300 hover:text-white transition-colors flex items-center space-x-1"
+                className="px-4 py-2 text-slate-600 hover:text-slate-900 dark:text-gray-300 dark:hover:text-white transition-colors flex items-center space-x-1"
               >
                 <span>Features</span>
                 <svg
@@ -62,15 +60,15 @@ const LandingNavbar = () => {
                   />
                 </svg>
               </Link>
-              <div className="absolute top-full left-0 mt-2 w-80 bg-[#1a1a1a] border border-gray-700 rounded-lg shadow-xl p-4 space-y-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div className="absolute top-full left-0 mt-2 w-80 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-gray-700 rounded-lg shadow-xl p-4 space-y-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                 {/* Personal Dashboard */}
                 <button
                   onClick={() => scrollToSection("dashboard-section")}
-                  className="w-full flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-800/50 transition-colors group text-left"
+                  className="w-full flex items-start space-x-3 p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800/50 transition-colors group text-left"
                 >
                   <div className="flex-shrink-0 mt-1">
                     <svg
-                      className="w-5 h-5 text-white transition-colors"
+                      className="w-5 h-5 text-slate-900 dark:text-white transition-colors"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -84,10 +82,10 @@ const LandingNavbar = () => {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-white font-semibold text-sm">
+                    <h4 className="text-slate-900 dark:text-white font-semibold text-sm">
                       Personal Dashboard
                     </h4>
-                    <p className="text-gray-400 text-xs mt-1">
+                    <p className="text-slate-500 dark:text-gray-400 text-xs mt-1">
                       Track your progress and manage your learning journey
                     </p>
                   </div>
@@ -96,11 +94,11 @@ const LandingNavbar = () => {
                 {/* Connect with Mentors */}
                 <button
                   onClick={() => scrollToSection("connect-mentors-section")}
-                  className="w-full flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-800/50 transition-colors group text-left"
+                  className="w-full flex items-start space-x-3 p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800/50 transition-colors group text-left"
                 >
                   <div className="flex-shrink-0 mt-1">
                     <svg
-                      className="w-5 h-5 text-white transition-colors"
+                      className="w-5 h-5 text-slate-900 dark:text-white transition-colors"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -114,10 +112,10 @@ const LandingNavbar = () => {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-white font-semibold text-sm">
+                    <h4 className="text-slate-900 dark:text-white font-semibold text-sm">
                       Connect with Mentors
                     </h4>
-                    <p className="text-gray-400 text-xs mt-1">
+                    <p className="text-slate-500 dark:text-gray-400 text-xs mt-1">
                       Build meaningful connections with expert mentors
                     </p>
                   </div>
@@ -130,7 +128,7 @@ const LandingNavbar = () => {
               <Link
                 to="/solutions"
                 state={{ fromNavbar: true }}
-                className="px-4 py-2 text-gray-300 hover:text-white transition-colors flex items-center space-x-1"
+                className="px-4 py-2 text-slate-600 hover:text-slate-900 dark:text-gray-300 dark:hover:text-white transition-colors flex items-center space-x-1"
               >
                 <span>Solutions</span>
                 <svg
@@ -147,16 +145,16 @@ const LandingNavbar = () => {
                   />
                 </svg>
               </Link>
-              <div className="absolute top-full left-0 mt-2 w-64 bg-[#1a1a1a] border border-gray-700 rounded-lg shadow-xl p-4 space-y-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-gray-700 rounded-lg shadow-xl p-4 space-y-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                 {/* For Students */}
                 <Link
                   to="/solutions"
                   state={{ fromNavbar: true }}
-                  className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-800/50 transition-colors group"
+                  className="flex items-start space-x-3 p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800/50 transition-colors group"
                 >
                   <div className="flex-shrink-0 mt-1">
                     <svg
-                      className="w-5 h-5 text-gray-400"
+                      className="w-5 h-5 text-slate-500 dark:text-gray-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -170,10 +168,10 @@ const LandingNavbar = () => {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-white font-semibold text-sm">
+                    <h4 className="text-slate-900 dark:text-white font-semibold text-sm">
                       For Students
                     </h4>
-                    <p className="text-gray-400 text-xs mt-1">
+                    <p className="text-slate-500 dark:text-gray-400 text-xs mt-1">
                       Get personalized guidance and track progress
                     </p>
                   </div>
@@ -183,11 +181,11 @@ const LandingNavbar = () => {
                 <Link
                   to="/solutions"
                   state={{ fromNavbar: true }}
-                  className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-800/50 transition-colors group"
+                  className="flex items-start space-x-3 p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800/50 transition-colors group"
                 >
                   <div className="flex-shrink-0 mt-1">
                     <svg
-                      className="w-5 h-5 text-gray-400"
+                      className="w-5 h-5 text-slate-500 dark:text-gray-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -201,10 +199,10 @@ const LandingNavbar = () => {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-white font-semibold text-sm">
+                    <h4 className="text-slate-900 dark:text-white font-semibold text-sm">
                       For Mentors
                     </h4>
-                    <p className="text-gray-400 text-xs mt-1">
+                    <p className="text-slate-500 dark:text-gray-400 text-xs mt-1">
                       Share expertise and manage mentees
                     </p>
                   </div>
@@ -218,21 +216,21 @@ const LandingNavbar = () => {
                 e.preventDefault();
                 scrollToSection("footer");
               }}
-              className="px-4 py-2 text-gray-300 hover:text-white transition-colors"
+              className="px-4 py-2 text-slate-600 hover:text-slate-900 dark:text-gray-300 dark:hover:text-white transition-colors"
             >
               Our Socials
             </a>
             <Link
               to="/contact-us"
               state={{ fromNavbar: true }}
-              className="px-4 py-2 text-gray-300 hover:text-white transition-colors"
+              className="px-4 py-2 text-slate-600 hover:text-slate-900 dark:text-gray-300 dark:hover:text-white transition-colors"
             >
               Contact Us
             </Link>
           </div>
           {/* Hamburger Button (Mobile Only) */}
           <button
-            className="md:hidden text-white text-2xl"
+            className="md:hidden text-slate-900 dark:text-white text-2xl"
             onClick={() => setIsOpen(!isOpen)}
           >
             ☰
@@ -240,6 +238,17 @@ const LandingNavbar = () => {
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-4">
+            {/* Theme Toggle */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="inline-flex items-center justify-center p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800/50 transition-colors"
+              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+              title={theme === "dark" ? "Light mode" : "Dark mode"}
+            >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
             {/* Copyright */}
             <div className="hidden lg:block text-gray-500 text-xs">
               © Arsh Chauhan
@@ -247,14 +256,14 @@ const LandingNavbar = () => {
 
             <Link
               to="/login"
-              className="hidden md:block px-4 py-2 text-gray-300 hover:text-white transition-colors text-sm"
+              className="hidden md:block px-4 py-2 text-slate-600 hover:text-slate-900 dark:text-gray-300 dark:hover:text-white transition-colors text-sm"
             >
               Log in
             </Link>
 
             <Link
               to="/register"
-              className="px-3 py-1.5 md:px-5 md:py-2 bg-white text-black font-medium rounded-lg hover:bg-gray-100 transition-colors text-xs md:text-sm flex items-center space-x-2"
+              className="px-3 py-1.5 md:px-5 md:py-2 bg-slate-900 text-white dark:bg-white dark:text-black font-medium rounded-lg hover:bg-slate-800 dark:hover:bg-gray-100 transition-colors text-xs md:text-sm flex items-center space-x-2"
             >
               <span>Get Started</span>
               <svg
@@ -276,10 +285,12 @@ const LandingNavbar = () => {
       </div>
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-[#0a0a0a] px-6 pb-4 space-y-4 border-t border-gray-800 text-gray-300">
+        <div className="md:hidden bg-white dark:bg-[#0a0a0a] px-6 pb-4 space-y-4 border-t border-slate-200 dark:border-gray-800 text-slate-700 dark:text-gray-300">
           {/* FEATURES SECTION */}
           <div>
-            <p className="text-white font-semibold mb-2">Features</p>
+            <p className="text-slate-900 dark:text-white font-semibold mb-2">
+              Features
+            </p>
             <button
               onClick={() => {
                 scrollToSection("dashboard-section");
@@ -303,7 +314,9 @@ const LandingNavbar = () => {
 
           {/* SOLUTIONS SECTION */}
           <div>
-            <p className="text-white font-semibold mb-2">Solutions</p>
+            <p className="text-slate-900 dark:text-white font-semibold mb-2">
+              Solutions
+            </p>
             <Link
               to="/solutions"
               onClick={() => setIsOpen(false)}
@@ -347,6 +360,19 @@ const LandingNavbar = () => {
           >
             Log in
           </Link>
+
+          <button
+            type="button"
+            onClick={() => {
+              toggleTheme();
+              setIsOpen(false);
+            }}
+            className="w-full flex items-center justify-between py-2"
+            aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+          >
+            <span>Theme</span>
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
         </div>
       )}
     </nav>
