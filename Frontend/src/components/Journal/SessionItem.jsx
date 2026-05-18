@@ -52,7 +52,7 @@ const SessionItem = ({ session, userRole, isActive, onClick, hasNotes, hasAIAnal
             {session.topic && (
               <>
                 <span className="text-gray-500 text-xs">•</span>
-                <span className="text-gray-300 text-xs truncate max-w-[100px]">
+               <span className="text-gray-300 text-xs truncate max-w-[8rem]">
                   {session.topic}
                 </span>
               </>

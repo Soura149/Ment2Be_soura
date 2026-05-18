@@ -94,7 +94,7 @@ const MentorCard = ({ mentor }) => {
           </div>
 
           {/* Mentor Info */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <div className="flex justify-between items-start">
               <div>
                 <h3 className="text-lg font-semibold text-white">{mentor.name}</h3>
@@ -102,7 +102,7 @@ const MentorCard = ({ mentor }) => {
                 <p className="text-sm text-gray-400">{mentor.companies}</p>
                 <p className="text-xs text-gray-500 mt-1">{mentor.experience}</p>
               </div>
-              <div className="flex items-center bg-[#535353] text-white text-sm font-medium px-2 py-1 rounded">
+              <div className="flex items-center shrink-0 ml-2 bg-[#535353] text-white text-sm font-medium px-2 py-1 rounded">
                 <FiStar className="text-white mr-1" />
                 {Number(mentor.rating || mentor.averageRating || 0).toFixed(1)} ({mentor.ratedCount || mentor.totalReviews || 0})
               </div>

@@ -10,7 +10,7 @@ const ProfileNavigation = ({ activeTab = 'overview', onTabChange }) => {
   return (
     <div className="bg-[#121212] border border-[#333] rounded-lg">
       <div className="border-b border-[#333]">
-        <nav className="flex space-x-8 px-6">
+        <nav className="flex overflow-x-auto scrollbar-hide space-x-4 md:space-x-8 px-6">
           {tabs.map((tab) => (
             <button
               key={tab.id}
