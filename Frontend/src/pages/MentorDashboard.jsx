@@ -751,7 +751,7 @@ const MentorDashboard = () => {
   const skillsList = skills.length > 0 ? skills : profile?.skills || [];
  
   return (
-    <div className="h-screen bg-[#0a0a0a] text-gray-100 overflow-hidden">
+    <div className="mentor-dashboard h-screen bg-[#0a0a0a] text-gray-100 overflow-hidden">
       {saveToast.visible && (
         <div className="fixed top-6 right-6 z-[9999]">
           <div className="flex items-center gap-3 px-4 py-3 rounded-lg border border-gray-600/60 shadow-lg backdrop-blur-sm bg-[#202327]/95 text-gray-100">

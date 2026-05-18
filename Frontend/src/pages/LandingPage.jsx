@@ -148,18 +148,6 @@ const LandingPage = () => {
             0 2px 6px rgba(255, 255, 255, 0.1);
           background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
         }
-
-        html {
-          --lp-card-border: rgba(15, 23, 42, 0.14);
-          --lp-card-border-strong: rgba(15, 23, 42, 0.18);
-          --lp-card-shadow: 0 16px 45px rgba(15, 23, 42, 0.14), 0 4px 16px rgba(15, 23, 42, 0.08);
-        }
-
-        .dark {
-          --lp-card-border: rgba(255, 255, 255, 0.4);
-          --lp-card-border-strong: rgba(255, 255, 255, 0.25);
-          --lp-card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), inset -1px 0 0 rgba(255, 255, 255, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
       `}</style>
       {/* Background Layers (Light + Dark) */}
       <div
