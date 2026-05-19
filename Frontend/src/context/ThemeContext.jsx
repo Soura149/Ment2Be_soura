@@ -13,28 +13,38 @@ function applyThemeToDocument(theme) {
   }
 }
 
+function getInitialTheme() {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const saved = window.localStorage.getItem(STORAGE_KEY);
+      if (saved === 'light' || saved === 'dark') {
+        return saved;
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  if (typeof document !== 'undefined') {
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+  }
+
+  return 'dark';
+}
+
 export function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState('dark');
+  const [theme, setThemeState] = useState(() => getInitialTheme());
   const transitionTimeoutRef = useRef(null);
 
   useEffect(() => {
-    // Initialize from localStorage; default to dark.
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      const initialTheme = saved === 'light' || saved === 'dark' ? saved : 'dark';
-      setThemeState(initialTheme);
-      applyThemeToDocument(initialTheme);
-    } catch {
-      setThemeState('dark');
-      applyThemeToDocument('dark');
-    }
+    applyThemeToDocument(theme);
 
     return () => {
       if (transitionTimeoutRef.current) {
         window.clearTimeout(transitionTimeoutRef.current);
       }
     };
-  }, []);
+  }, [theme]);
 
   const setTheme = useCallback((nextTheme) => {
     const normalized = nextTheme === 'light' ? 'light' : 'dark';
