@@ -31,7 +31,7 @@ export function ContextSidebar({ messages, mentee }) {
   const cn = (...classes) => classes.filter(Boolean).join(' ');
 
   // Simple Progress component
-  const Progress = ({ value, className }) => (
+  const Progress = ({ value }) => (
     <div className="w-full bg-gray-700 rounded-full h-1.5">
       <div 
         className="bg-gray-400 h-1.5 rounded-full transition-all duration-300" 

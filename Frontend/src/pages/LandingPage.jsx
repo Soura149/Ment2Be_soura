@@ -90,7 +90,7 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#000000] relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#000000] relative overflow-hidden">
       <style>{`
         @keyframes slideInUp {
           from {
@@ -122,20 +122,36 @@ const LandingPage = () => {
         .blue-outline-illustration {
           filter: brightness(0.8) invert(1) sepia(1) hue-rotate(180deg) saturate(5) contrast(1.5) brightness(1.2);
         }
+        .themed-illustration {
+          filter: none;
+        }
+        .dark .themed-illustration {
+          filter: brightness(0) invert(1) sepia(1) hue-rotate(200deg) saturate(2);
+        }
         .badge-3d {
+          border: 1px solid rgba(15, 23, 42, 0.16);
+          border-bottom: 2px solid rgba(15, 23, 42, 0.08);
+          border-right: 2px solid rgba(15, 23, 42, 0.08);
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.6),
+            0 10px 30px rgba(15, 23, 42, 0.10),
+            0 4px 10px rgba(15, 23, 42, 0.06);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.35) 100%);
+        }
+        .dark .badge-3d {
           border: 2px solid rgba(255, 255, 255, 0.6);
           border-bottom: 3px solid rgba(255, 255, 255, 0.2);
           border-right: 3px solid rgba(255, 255, 255, 0.2);
-          box-shadow: 
+          box-shadow:
             inset 0 1px 0 rgba(255, 255, 255, 0.4),
             0 4px 12px rgba(255, 255, 255, 0.15),
             0 2px 6px rgba(255, 255, 255, 0.1);
           background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
         }
       `}</style>
-      {/* Blue Gradient Background with Texture */}
-      <div 
-        className="absolute inset-0"
+      {/* Background Layers (Light + Dark) */}
+      <div
+        className="absolute inset-0 dark:block hidden"
         style={{
           background: `
             radial-gradient(ellipse 100% 60% at 50% 50%, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 40%, transparent 70%),
@@ -143,10 +159,19 @@ const LandingPage = () => {
           `
         }}
       />
-      
-      {/* Starry Night Effect - White Dots */}
-      <div 
-        className="absolute inset-0"
+      <div
+        className="absolute inset-0 block dark:hidden"
+        style={{
+          background: `
+            radial-gradient(ellipse 110% 70% at 50% 35%, rgba(59, 130, 246, 0.10) 0%, rgba(99, 102, 241, 0.06) 35%, transparent 70%),
+            linear-gradient(180deg, rgba(248, 250, 252, 1) 0%, rgba(241, 245, 249, 1) 55%, rgba(248, 250, 252, 1) 100%)
+          `
+        }}
+      />
+
+      {/* Starry/Noise Layers (Light + Dark) */}
+      <div
+        className="absolute inset-0 dark:block hidden"
         style={{
           backgroundImage: `
             radial-gradient(circle, white 1px, transparent 1px),
@@ -157,14 +182,35 @@ const LandingPage = () => {
           opacity: 0.15
         }}
       />
-      
-      {/* Textured Background Pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.03]"
+      <div
+        className="absolute inset-0 block dark:hidden"
+        style={{
+          backgroundImage: `
+            radial-gradient(circle, rgba(15,23,42,0.18) 1px, transparent 1px),
+            radial-gradient(circle, rgba(15,23,42,0.12) 0.5px, transparent 0.5px)
+          `,
+          backgroundSize: '120px 120px, 170px 170px',
+          backgroundPosition: '0 0, 60px 60px',
+          opacity: 0.10
+        }}
+      />
+
+      <div
+        className="absolute inset-0 dark:block hidden opacity-[0.03]"
         style={{
           backgroundImage: `
             repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px),
             repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px)
+          `,
+          backgroundSize: '50px 50px, 50px 50px'
+        }}
+      />
+      <div
+        className="absolute inset-0 block dark:hidden opacity-[0.035]"
+        style={{
+          backgroundImage: `
+            repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(15, 23, 42, 0.03) 2px, rgba(15, 23, 42, 0.03) 4px),
+            repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(15, 23, 42, 0.03) 2px, rgba(15, 23, 42, 0.03) 4px)
           `,
           backgroundSize: '50px 50px, 50px 50px'
         }}
@@ -174,7 +220,7 @@ const LandingPage = () => {
             
       <div className="absolute top-40 right-16 z-10 hidden lg:block">
         <div className="px-6 py-3 rounded-full badge-3d backdrop-blur-sm">
-          <span className="text-white text-sm font-medium">Task Management</span>
+          <span className="text-slate-900 dark:text-white text-sm font-medium">Task Management</span>
         </div>
       </div>
       
@@ -187,17 +233,17 @@ const LandingPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto px-6 items-center">
           {/* Left Side - Text */}
           <div className="text-center lg:text-left">
-            <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-6xl md:text-7xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
               Accessible and Tailored
               <br />
               Mentorship Experience
             </h1>
-            <p className="text-xl text-gray-400 mb-8">
+            <p className="text-xl text-slate-600 dark:text-gray-400 mb-8">
               Find mentors to develop your skills and connect with like minded individuals.
             </p>
             <Link 
               to="/login" 
-              className="inline-flex items-center space-x-2 bg-white text-black font-medium py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors text-lg"
+              className="inline-flex items-center space-x-2 bg-slate-900 text-white dark:bg-white dark:text-black font-medium py-3 px-8 rounded-lg hover:bg-slate-800 dark:hover:bg-gray-100 transition-colors text-lg"
             >
               <span>Try Ment2Be</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -211,7 +257,7 @@ const LandingPage = () => {
             <img 
               src={mentoringIllustration} 
               alt="Mentoring Illustration" 
-              className="w-full max-w-md h-auto white-illustration"
+              className="w-full max-w-md h-auto themed-illustration"
             />
           </div>
         </div>
@@ -222,10 +268,10 @@ const LandingPage = () => {
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-12">
-            <h2 className={`text-4xl font-bold text-white mb-4 ${animateElements.heading ? 'animate-slide-in' : ''}`}>
+            <h2 className={`text-4xl font-bold text-slate-900 dark:text-white mb-4 ${animateElements.heading ? 'animate-slide-in' : ''}`}>
               {dashboardView === 'student' ? 'Student Dashboard' : 'Mentor Dashboard'}
             </h2>
-            <p className={`text-xl text-gray-400 ${animateElements.description ? 'animate-slide-in' : ''}`}>
+            <p className={`text-xl text-slate-600 dark:text-gray-400 ${animateElements.description ? 'animate-slide-in' : ''}`}>
               {dashboardView === 'student' 
                 ? 'Track progress, manage tasks, and connect with mentors all in one place'
                 : 'Manage mentees, track their progress, and provide guidance'}
@@ -237,17 +283,17 @@ const LandingPage = () => {
             {/* Dashboard Image */}
             <div className={`relative group ${animateElements.image ? 'animate-slide-in' : ''}`}>
               {/* Glow Effect Background */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-gray-600 to-gray-700 rounded-xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-slate-200 to-slate-300 dark:from-gray-600 dark:to-gray-700 rounded-xl blur opacity-40 dark:opacity-20 group-hover:opacity-60 dark:group-hover:opacity-30 transition duration-300"></div>
               
               {/* Image with Fade Transition */}
               <img 
                 src={dashboardView === 'student' ? studentDashboardImage : mentorDashboardImage}
                 alt={`${dashboardView === 'student' ? 'Student' : 'Mentor'} Dashboard`}
-                className="relative w-full rounded-xl shadow-2xl border border-gray-700 hover:border-gray-500 transition-all duration-300"
+                className="relative w-full rounded-xl shadow-2xl border border-slate-200 dark:border-gray-700 hover:border-slate-300 dark:hover:border-gray-500 transition-all duration-300"
               />
               
               {/* Corner Badge */}
-              <div className="absolute top-6 right-6 bg-white text-black px-4 py-2 rounded-lg font-semibold shadow-lg">
+              <div className="absolute top-6 right-6 bg-slate-900 text-white dark:bg-white dark:text-black px-4 py-2 rounded-lg font-semibold shadow-lg">
                 {dashboardView === 'student' ? 'Student View' : 'Mentor View'}
               </div>
             </div>
@@ -256,20 +302,20 @@ const LandingPage = () => {
             <div className={`flex items-center justify-center gap-4 mt-8 ${animateElements.buttons ? 'animate-slide-in' : ''}`}>
               <button 
                 onClick={() => setDashboardView('student')}
-                className="p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors backdrop-blur-sm"
+                className="p-2 bg-slate-900/10 hover:bg-slate-900/15 dark:bg-white/20 dark:hover:bg-white/40 rounded-full transition-colors backdrop-blur-sm"
               >
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-slate-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
-              <span className="text-white text-sm font-medium px-4 py-1 bg-white/10 rounded-full backdrop-blur-sm">
+              <span className="text-slate-900 dark:text-white text-sm font-medium px-4 py-1 bg-slate-900/5 dark:bg-white/10 rounded-full backdrop-blur-sm">
                 {dashboardView === 'student' ? 'Student' : 'Mentor'}
               </span>
               <button 
                 onClick={() => setDashboardView('mentor')}
-                className="p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors backdrop-blur-sm"
+                className="p-2 bg-slate-900/10 hover:bg-slate-900/15 dark:bg-white/20 dark:hover:bg-white/40 rounded-full transition-colors backdrop-blur-sm"
               >
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-slate-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
@@ -279,10 +325,10 @@ const LandingPage = () => {
       </div>
 
       {/* Black Space with Texture - Blended from Previous Section */}
-      <div className="min-h-screen bg-[#000000] relative overflow-hidden" id="connect-mentors-section">
+      <div className="min-h-screen bg-slate-50 dark:bg-[#000000] relative overflow-hidden" id="connect-mentors-section">
         {/* Starry Night Effect */}
         <div 
-          className="absolute inset-0"
+          className="absolute inset-0 dark:block hidden"
           style={{
             backgroundImage: `
               radial-gradient(circle, white 1px, transparent 1px),
@@ -293,14 +339,36 @@ const LandingPage = () => {
             opacity: 0.15
           }}
         />
+        <div 
+          className="absolute inset-0 block dark:hidden"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle, rgba(15,23,42,0.18) 1px, transparent 1px),
+              radial-gradient(circle, rgba(15,23,42,0.12) 0.5px, transparent 0.5px)
+            `,
+            backgroundSize: '120px 120px, 170px 170px',
+            backgroundPosition: '0 0, 60px 60px',
+            opacity: 0.10
+          }}
+        />
         
         {/* Grid Texture Pattern */}
         <div 
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute inset-0 dark:block hidden opacity-[0.03]"
           style={{
             backgroundImage: `
               repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px),
               repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px)
+            `,
+            backgroundSize: '50px 50px, 50px 50px'
+          }}
+        />
+        <div
+          className="absolute inset-0 block dark:hidden opacity-[0.035]"
+          style={{
+            backgroundImage: `
+              repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(15, 23, 42, 0.03) 2px, rgba(15, 23, 42, 0.03) 4px),
+              repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(15, 23, 42, 0.03) 2px, rgba(15, 23, 42, 0.03) 4px)
             `,
             backgroundSize: '50px 50px, 50px 50px'
           }}
@@ -311,20 +379,20 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Side - Text */}
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white leading-tight mb-6">
                 Connect with Expert Mentors
               </h2>
-              <p className="text-xl text-gray-400 mb-8">
+              <p className="text-xl text-slate-600 dark:text-gray-400 mb-8">
                 Build meaningful connections with industry professionals who can guide your career journey and help you achieve your goals.
               </p>
               <div className="space-y-4">
-                <div className="text-gray-300">
+                <div className="text-slate-700 dark:text-gray-300">
                   <span>• 1-on-1 personalized mentorship sessions</span>
                 </div>
-                <div className="text-gray-300">
+                <div className="text-slate-700 dark:text-gray-300">
                   <span>• Real-time collaboration and feedback</span>
                 </div>
-                <div className="text-gray-300">
+                <div className="text-slate-700 dark:text-gray-300">
                   <span>• Access to exclusive learning resources</span>
                 </div>
               </div>
@@ -335,7 +403,7 @@ const LandingPage = () => {
               <img 
                 src={groupsIllustration} 
                 alt="Groups and Community" 
-                className="w-full max-w-2xl h-auto white-illustration"
+                className="w-full max-w-2xl h-auto themed-illustration"
               />
             </div>
           </div>
@@ -368,19 +436,14 @@ const LandingPage = () => {
                     alt="Connect Community"
                     className="w-full h-full rounded-xl"
                     style={{
-                      border: '3px solid rgba(255, 255, 255, 0.4)',
-                      borderBottom: '6px solid rgba(255, 255, 255, 0.25)',
-                      borderRight: '6px solid rgba(255, 255, 255, 0.25)',
-                      boxShadow: `
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                        inset -1px 0 0 rgba(255, 255, 255, 0.2),
-                        0 4px 12px rgba(0, 0, 0, 0.15),
-                        0 2px 6px rgba(0, 0, 0, 0.1)
-                      `
+                      border: '3px solid var(--lp-card-border)',
+                      borderBottom: '6px solid var(--lp-card-border-strong)',
+                      borderRight: '6px solid var(--lp-card-border-strong)',
+                      boxShadow: 'var(--lp-card-shadow)'
                     }}
                   />
                   {/* Highlight Overlay - Shows on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 dark:from-black/70 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                     <div className="text-white">
                       <h3 className="text-xl font-bold mb-2">Community Building</h3>
                       <p className="text-sm text-gray-200">Connect with mentors and build lasting professional relationships</p>
@@ -402,19 +465,14 @@ const LandingPage = () => {
                     alt="Connect Community 5"
                     className="w-full h-full rounded-xl"
                     style={{
-                      border: '3px solid rgba(255, 255, 255, 0.4)',
-                      borderBottom: '6px solid rgba(255, 255, 255, 0.25)',
-                      borderRight: '6px solid rgba(255, 255, 255, 0.25)',
-                      boxShadow: `
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                        inset -1px 0 0 rgba(255, 255, 255, 0.2),
-                        0 4px 12px rgba(0, 0, 0, 0.15),
-                        0 2px 6px rgba(0, 0, 0, 0.1)
-                      `
+                      border: '3px solid var(--lp-card-border)',
+                      borderBottom: '6px solid var(--lp-card-border-strong)',
+                      borderRight: '6px solid var(--lp-card-border-strong)',
+                      boxShadow: 'var(--lp-card-shadow)'
                     }}
                   />
                   {/* Highlight Overlay - Shows on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 dark:from-black/70 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                     <div className="text-white">
                       <h3 className="text-xl font-bold mb-2">Skill Development</h3>
                       <p className="text-sm text-gray-200">Master new skills and advance your career with expert guidance</p>
@@ -423,22 +481,29 @@ const LandingPage = () => {
                 </div>
               </div>
             </div>
-            <p className="text-center text-gray-400 mt-4 text-sm">Click to flip image</p>
+            <p className="text-center text-slate-500 dark:text-gray-400 mt-4 text-sm">Click to flip image</p>
           </div>
         </div>
         </div>
 
       {/* New Section with Color Blend Background */}
-      <div 
-        className="w-full py-32"
-        style={{
-          background: 'linear-gradient(180deg, #000000 0%, #0d0d0d 15%, #131313 35%, #161616 60%, #171717 85%, #1a1a1a 100%)'
-        }}
-      >
-        <div className="max-w-6xl mx-auto px-6">
+      <div className="w-full py-32 relative overflow-hidden">
+        <div
+          className="absolute inset-0 dark:block hidden"
+          style={{
+            background: 'linear-gradient(180deg, #000000 0%, #0d0d0d 15%, #131313 35%, #161616 60%, #171717 85%, #1a1a1a 100%)'
+          }}
+        />
+        <div
+          className="absolute inset-0 block dark:hidden"
+          style={{
+            background: 'linear-gradient(180deg, #f8fafc 0%, #f1f5f9 35%, #eef2f7 60%, #f8fafc 100%)'
+          }}
+        />
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
           {/* Trusted by Many Mentors Section */}
           <div className="text-center">
-            <h2 className="text-4xl font-bold text-white mb-8">Trusted by Many Mentors</h2>
+            <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-8">Trusted by Many Mentors</h2>
             
             {/* Mentor Names Carousel */}
             <div className="p-8 mb-8">
@@ -462,8 +527,8 @@ const LandingPage = () => {
                           onLoad={() => markMentorImageLoaded(mentor.image)}
                         />
                       </div>
-                      <p className="text-white font-semibold">{mentor.name}</p>
-                      <p className="text-gray-300 text-sm">{mentor.role}</p>
+                      <p className="text-slate-900 dark:text-white font-semibold">{mentor.name}</p>
+                      <p className="text-slate-600 dark:text-gray-300 text-sm">{mentor.role}</p>
                     </div>
                   ))}
                   {mentorCarouselItems.map((mentor) => (
@@ -484,8 +549,8 @@ const LandingPage = () => {
                           onLoad={() => markMentorImageLoaded(mentor.image)}
                         />
                       </div>
-                      <p className="text-white font-semibold">{mentor.name}</p>
-                      <p className="text-gray-300 text-sm">{mentor.role}</p>
+                      <p className="text-slate-900 dark:text-white font-semibold">{mentor.name}</p>
+                      <p className="text-slate-600 dark:text-gray-300 text-sm">{mentor.role}</p>
                     </div>
                   ))}
                 </div>
@@ -499,19 +564,19 @@ const LandingPage = () => {
                 <img
                   src={mentoringIllustration}
                   alt="Mentorship"
-                  className="w-28 h-28 white-illustration"
+                  className="w-28 h-28 themed-illustration"
                 />
               </div>
 
-              <p className="text-[#d9d3c7] text-sm tracking-wide mb-6">Have that “aha” mentorship moment</p>
+              <p className="text-slate-600 dark:text-[#d9d3c7] text-sm tracking-wide mb-6">Have that “aha” mentorship moment</p>
 
-              <h3 className="text-4xl md:text-5xl font-extrabold text-[#f3ead7] leading-tight">
+              <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-[#f3ead7] leading-tight">
                 Lots of platforms promise to “match” you with a mentor,
                 then leave you with a bunch of empty chats.
-                <span className="text-[#ff6fae]"> Hooray, you got nowhere.</span>
+                <span className="text-pink-500 dark:text-[#ff6fae]"> Hooray, you got nowhere.</span>
               </h3>
 
-              <p className="text-[#d9d3c7] text-base md:text-lg mt-8 leading-relaxed">
+              <p className="text-slate-600 dark:text-[#d9d3c7] text-base md:text-lg mt-8 leading-relaxed">
                 We don’t skip the hard parts. Ment2Be helps you book sessions, set clear goals,
                 track tasks, and get feedback — so you keep moving forward, one step at a time.
               </p>
@@ -520,7 +585,7 @@ const LandingPage = () => {
                 <Link
                   to="/login"
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center justify-center px-10 py-3 rounded-full bg-[#ff6fae] text-black font-semibold shadow-[0_10px_30px_rgba(255,111,174,0.25)] hover:bg-[#ff86bb] transition-colors relative z-50"
+                  className="inline-flex items-center justify-center px-10 py-3 rounded-full bg-slate-900 text-white dark:bg-[#ff6fae] dark:text-black font-semibold shadow-[0_10px_30px_rgba(15,23,42,0.14)] dark:shadow-[0_10px_30px_rgba(255,111,174,0.25)] hover:bg-slate-800 dark:hover:bg-[#ff86bb] transition-colors relative z-50"
                 >
                   I’M READY LET’S GO!
                 </Link>
@@ -531,7 +596,7 @@ const LandingPage = () => {
       </div>
 
       {/* Footer with Ment2Be Branding */}
-      <div className="relative z-10 py-16 px-6 bg-[#171717]">
+      <div className="relative z-10 py-16 px-6 bg-slate-50 dark:bg-[#171717]">
         <div className="max-w-6xl mx-auto text-center">
         </div>
       </div>

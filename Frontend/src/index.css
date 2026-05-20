@@ -3,6 +3,38 @@
     display:block;
 }
 
+html {
+  color-scheme: dark;
+}
+
+html:not(.dark) {
+  color-scheme: light;
+}
+
+/* LandingPage card/glass tokens (used in LandingPage flip cards) */
+html {
+  --lp-card-border: rgba(15, 23, 42, 0.14);
+  --lp-card-border-strong: rgba(15, 23, 42, 0.18);
+  --lp-card-shadow: 0 16px 45px rgba(15, 23, 42, 0.14), 0 4px 16px rgba(15, 23, 42, 0.08);
+}
+
+html.dark {
+  --lp-card-border: rgba(255, 255, 255, 0.4);
+  --lp-card-border-strong: rgba(255, 255, 255, 0.25);
+  --lp-card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), inset -1px 0 0 rgba(255, 255, 255, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  @apply bg-white text-slate-900 dark:bg-[#121212] dark:text-slate-100;
+}
+
+/* Smooth (but brief) transitions when switching themes */
+html.theme-transition,
+html.theme-transition * {
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease,
+    box-shadow 200ms ease, transform 200ms ease, fill 200ms ease, stroke 200ms ease;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -83,14 +115,14 @@
 }
 
 /* Ensure all scrollable areas in MentorDashboard hide their scrollbars */
-.bg-[\#121212] .overflow-y-auto,
-.bg-[\#121212] .overflow-auto {
+.mentor-dashboard .overflow-y-auto,
+.mentor-dashboard .overflow-auto {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
 }
 
-.bg-[\#121212] .overflow-y-auto::-webkit-scrollbar,
-.bg-[\#121212] .overflow-auto::-webkit-scrollbar {
+.mentor-dashboard .overflow-y-auto::-webkit-scrollbar,
+.mentor-dashboard .overflow-auto::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
