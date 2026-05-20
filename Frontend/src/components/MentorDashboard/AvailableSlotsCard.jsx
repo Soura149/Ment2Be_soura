@@ -134,7 +134,7 @@ export const AvailableSlotsCard = ({ className, data, onEdit, onSave }) => {
     return (
       <div className={`bg-[#121212] border border-gray-700 rounded-xl shadow-lg overflow-hidden ${className || ''}`}>
         <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between flex-wrap gap-2 mb-6">
             <div className="flex items-center gap-2">
               <FiClock className="w-6 h-6 text-white" />
               <h3 className="text-lg font-semibold text-white">Set Your Availability</h3>
@@ -165,7 +165,7 @@ export const AvailableSlotsCard = ({ className, data, onEdit, onSave }) => {
           {/* Available Time Slots */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-300 mb-3">Available Time Slots</label>
-            <div className="grid grid-cols-2 gap-2">
+         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {timeSlots.map((time) => (
                 <button
                   key={time}

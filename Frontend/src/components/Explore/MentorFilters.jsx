@@ -64,7 +64,7 @@ const MentorFilters = ({ filters, onFiltersChange, availableSkills }) => {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-96 bg-[#2a2d31] border border-gray-600 rounded-lg shadow-xl z-50">
+        <div className="absolute top-full left-0 mt-2 w-96 max-w-[calc(100vw-2rem)] bg-[#2a2d31] border border-gray-600 rounded-lg shadow-xl z-50">
           <div className="p-4 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-white font-medium">Filters</h3>

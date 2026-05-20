@@ -6,6 +6,8 @@ const SessionSidebar = ({ activeSessionId, onSessionSelect, currentSessionData, 
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  
 
   useEffect(() => {
     fetchCompletedSessions();
@@ -31,8 +33,9 @@ const SessionSidebar = ({ activeSessionId, onSessionSelect, currentSessionData, 
   };
 
   const handleSessionClick = (session) => {
-    onSessionSelect(session);
-  };
+  onSessionSelect(session);
+  setIsOpen(false); // closes sidebar on mobile after tap
+};
 
   // Add current session to the list if it's not already there
   const allSessions = currentSessionData && !sessions.find(s => s._id === currentSessionData._id)
@@ -40,7 +43,19 @@ const SessionSidebar = ({ activeSessionId, onSessionSelect, currentSessionData, 
     : sessions;
 
   return (
-    <div className="w-72 bg-[#0a0a0a] border-r border-gray-800 flex flex-col h-full">
+    <>
+    <button
+  className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-[#1a1a1a] border border-gray-700 text-white"
+  onClick={() => setIsOpen(prev => !prev)}
+>
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+  </svg>
+</button>
+
+{/* Backdrop */}
+{isOpen && <div className="md:hidden fixed inset-0 bg-black/60 z-30" onClick={() => setIsOpen(false)} />}
+    <div className={`fixed md:static inset-y-0 left-0 z-40 w-72 max-w-[85vw] bg-[#0a0a0a] border-r border-gray-800 flex flex-col h-full transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
       <div className="p-4 border-b border-gray-800">
         <h3 className="text-white font-semibold text-lg">Session Journal</h3>
         <p className="text-gray-400 text-sm mt-1">Your completed mentoring sessions</p>
@@ -95,6 +110,7 @@ const SessionSidebar = ({ activeSessionId, onSessionSelect, currentSessionData, 
       </div>
 
       </div>
+      </>
   );
 };
 

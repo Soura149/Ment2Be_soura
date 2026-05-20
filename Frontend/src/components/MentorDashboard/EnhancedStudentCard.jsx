@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   FiCalendar,
   FiClock,
@@ -12,7 +12,7 @@ import {
   FiUser,
   FiMail,
   FiBook,
-} from 'react-icons/fi';
+} from "react-icons/fi";
 
 export const EnhancedStudentCard = ({
   student,
@@ -27,7 +27,7 @@ export const EnhancedStudentCard = ({
   const [showAllSessions, setShowAllSessions] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showKarmaAnimation, setShowKarmaAnimation] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+  const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastProgress, setToastProgress] = useState(100);
 
@@ -53,13 +53,15 @@ export const EnhancedStudentCard = ({
   const handleJoinClick = (session) => {
     const timing = getSessionTiming(session);
     if (!timing.canJoin) {
-      setToastMessage(`Session is not available yet. You can join on ${formatDate(session.sessionDate)} at ${session.sessionTime}`);
+      setToastMessage(
+        `Session is not available yet. You can join on ${formatDate(session.sessionDate)} at ${session.sessionTime}`,
+      );
       setShowToast(true);
       setToastProgress(100);
-      
+
       // Animate progress bar over 4 seconds
       const interval = setInterval(() => {
-        setToastProgress(prev => {
+        setToastProgress((prev) => {
           if (prev <= 0) {
             clearInterval(interval);
             return 0;
@@ -67,7 +69,7 @@ export const EnhancedStudentCard = ({
           return prev - 0.5; // 100 / 200 = 0.5 per 20ms for smooth animation
         });
       }, 20);
-      
+
       setTimeout(() => {
         setShowToast(false);
         clearInterval(interval);
@@ -82,10 +84,12 @@ export const EnhancedStudentCard = ({
     const now = new Date();
     const dateA = new Date(a.sessionDate);
     const dateB = new Date(b.sessionDate);
-    
-    const isAUpcoming = dateA >= now && ['pending', 'confirmed'].includes(a.status);
-    const isBUpcoming = dateB >= now && ['pending', 'confirmed'].includes(b.status);
-    
+
+    const isAUpcoming =
+      dateA >= now && ["pending", "confirmed"].includes(a.status);
+    const isBUpcoming =
+      dateB >= now && ["pending", "confirmed"].includes(b.status);
+
     if (isAUpcoming && isBUpcoming) return dateA - dateB;
     if (isAUpcoming && !isBUpcoming) return -1;
     if (!isAUpcoming && isBUpcoming) return 1;
@@ -96,70 +100,85 @@ export const EnhancedStudentCard = ({
 
   // Get session timing info
   const getSessionTiming = (session) => {
-    if (!session) return { canJoin: false, message: 'No session data', timeLeft: null };
+    if (!session)
+      return { canJoin: false, message: "No session data", timeLeft: null };
 
     try {
       let timeString = session.sessionTime;
-      
-      if (timeString && (timeString.includes('AM') || timeString.includes('PM'))) {
-        const parts = timeString.trim().split(' ');
+
+      if (
+        timeString &&
+        (timeString.includes("AM") || timeString.includes("PM"))
+      ) {
+        const parts = timeString.trim().split(" ");
         if (parts.length === 2) {
           const [time, period] = parts;
-          const timeParts = time.split(':');
+          const timeParts = time.split(":");
           if (timeParts.length >= 2) {
             let hours = parseInt(timeParts[0]);
             let minutes = parseInt(timeParts[1]) || 0;
-            
-            if (period.toUpperCase() === 'PM' && hours !== 12) hours += 12;
-            else if (period.toUpperCase() === 'AM' && hours === 12) hours = 0;
-            
-            timeString = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`;
+
+            if (period.toUpperCase() === "PM" && hours !== 12) hours += 12;
+            else if (period.toUpperCase() === "AM" && hours === 12) hours = 0;
+
+            timeString = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:00`;
           }
         }
       }
-      
+
       let dateString = session.sessionDate;
-      if (dateString.includes('T')) dateString = dateString.split('T')[0];
-      
+      if (dateString.includes("T")) dateString = dateString.split("T")[0];
+
       const sessionDateTime = new Date(`${dateString}T${timeString}`);
       if (isNaN(sessionDateTime.getTime())) {
-        return { canJoin: false, message: 'Invalid time', timeLeft: null };
+        return { canJoin: false, message: "Invalid time", timeLeft: null };
       }
 
       const now = currentTime;
       const timeDiff = sessionDateTime.getTime() - now.getTime();
       const minutesUntilSession = Math.floor(timeDiff / (1000 * 60));
 
-      if (session.status === 'cancelled') {
-        return { canJoin: false, message: 'Cancelled', timeLeft: null, statusColor: 'text-gray-400' };
+      if (session.status === "cancelled") {
+        return {
+          canJoin: false,
+          message: "Cancelled",
+          timeLeft: null,
+          statusColor: "text-gray-400",
+        };
       }
 
-      if (session.status === 'completed') {
-        return { canJoin: false, message: 'Completed', timeLeft: null, statusColor: 'text-blue-400' };
+      if (session.status === "completed") {
+        return {
+          canJoin: false,
+          message: "Completed",
+          timeLeft: null,
+          statusColor: "text-blue-400",
+        };
       }
 
-      if (session.status === 'pending' || session.status === 'confirmed') {
-        const canJoin = session.status === 'confirmed' && 
-                       minutesUntilSession <= 5 && 
-                       minutesUntilSession >= -session.duration;
+      if (session.status === "pending" || session.status === "confirmed") {
+        const canJoin =
+          session.status === "confirmed" &&
+          minutesUntilSession <= 5 &&
+          minutesUntilSession >= -session.duration;
 
         if (canJoin) {
           if (minutesUntilSession > 0) {
-            return { 
-              canJoin: true, 
-              message: `Starts in ${minutesUntilSession}m`, 
+            return {
+              canJoin: true,
+              message: `Starts in ${minutesUntilSession}m`,
               timeLeft: minutesUntilSession,
-              statusColor: 'text-indigo-400',
-              isStartingSoon: true
+              statusColor: "text-indigo-400",
+              isStartingSoon: true,
             };
           } else {
             const minutesIntoSession = Math.abs(minutesUntilSession);
-            return { 
-              canJoin: true, 
-              message: `In progress (${minutesIntoSession}m)`, 
+            return {
+              canJoin: true,
+              message: `In progress (${minutesIntoSession}m)`,
               timeLeft: session.duration - minutesIntoSession,
-              statusColor: 'text-indigo-400',
-              isInProgress: true
+              statusColor: "text-indigo-400",
+              isInProgress: true,
             };
           }
         }
@@ -168,7 +187,7 @@ export const EnhancedStudentCard = ({
           const hoursUntil = Math.floor(minutesUntilSession / 60);
           const remainingMinutes = minutesUntilSession % 60;
           const daysUntil = Math.floor(minutesUntilSession / (60 * 24));
-          
+
           let timeMessage;
           if (daysUntil > 0) {
             timeMessage = `${daysUntil}d ${Math.floor((minutesUntilSession % (60 * 24)) / 60)}h`;
@@ -178,20 +197,33 @@ export const EnhancedStudentCard = ({
             timeMessage = `${minutesUntilSession}m`;
           }
 
-          const statusPrefix = session.status === 'pending' ? 'Pending - ' : '';
-          return { 
-            canJoin: false, 
-            message: `${statusPrefix}${timeMessage}`, 
+          const statusPrefix = session.status === "pending" ? "Pending - " : "";
+          return {
+            canJoin: false,
+            message: `${statusPrefix}${timeMessage}`,
             timeLeft: minutesUntilSession,
-            statusColor: session.status === 'pending' ? 'text-purple-400' : 'text-blue-400',
-            isPending: session.status === 'pending'
+            statusColor:
+              session.status === "pending"
+                ? "text-purple-400"
+                : "text-blue-400",
+            isPending: session.status === "pending",
           };
         }
       }
 
-      return { canJoin: false, message: `Status: ${session.status}`, timeLeft: null, statusColor: 'text-gray-400' };
+      return {
+        canJoin: false,
+        message: `Status: ${session.status}`,
+        timeLeft: null,
+        statusColor: "text-gray-400",
+      };
     } catch (error) {
-      return { canJoin: false, message: 'Error', timeLeft: null, statusColor: 'text-gray-400' };
+      return {
+        canJoin: false,
+        message: "Error",
+        timeLeft: null,
+        statusColor: "text-gray-400",
+      };
     }
   };
 
@@ -199,15 +231,18 @@ export const EnhancedStudentCard = ({
 
   const getStatusBadge = (status, sessionDate) => {
     // Check if session is expired (past date and not completed)
-    const isExpired = new Date(sessionDate) < new Date() && status !== 'completed' && status !== 'cancelled';
-    const displayStatus = isExpired ? 'expired' : status;
-    
+    const isExpired =
+      new Date(sessionDate) < new Date() &&
+      status !== "completed" &&
+      status !== "cancelled";
+    const displayStatus = isExpired ? "expired" : status;
+
     const badges = {
-      pending: { icon: FiAlertCircle, text: 'Pending' },
-      confirmed: { icon: FiCheckCircle, text: 'Confirmed' },
-      completed: { icon: FiCheckCircle, text: 'Completed' },
-      cancelled: { icon: FiXCircle, text: 'Cancelled' },
-      expired: { icon: FiAlertCircle, text: 'Expired' },
+      pending: { icon: FiAlertCircle, text: "Pending" },
+      confirmed: { icon: FiCheckCircle, text: "Confirmed" },
+      completed: { icon: FiCheckCircle, text: "Completed" },
+      cancelled: { icon: FiXCircle, text: "Cancelled" },
+      expired: { icon: FiAlertCircle, text: "Expired" },
     };
     const badge = badges[displayStatus] || badges.pending;
     const Icon = badge.icon;
@@ -221,12 +256,18 @@ export const EnhancedStudentCard = ({
 
   // Calculate stats
   const totalSessions = sessions.length;
-  const completedSessions = sessions.filter(s => s.status === 'completed').length;
-  const upcomingSessions = sessions.filter(s => {
+  const completedSessions = sessions.filter(
+    (s) => s.status === "completed",
+  ).length;
+  const upcomingSessions = sessions.filter((s) => {
     const date = new Date(s.sessionDate);
-    return date >= new Date() && ['pending', 'confirmed'].includes(s.status);
+    return date >= new Date() && ["pending", "confirmed"].includes(s.status);
   }).length;
-  const totalHours = Math.round(sessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + s.duration, 0) / 60);
+  const totalHours = Math.round(
+    sessions
+      .filter((s) => s.status === "completed")
+      .reduce((sum, s) => sum + s.duration, 0) / 60,
+  );
 
   return (
     <div className="bg-[#121212] border border-gray-700 rounded-xl overflow-visible shadow-lg relative">
@@ -238,7 +279,7 @@ export const EnhancedStudentCard = ({
             <span className="text-sm">{toastMessage}</span>
           </div>
           <div className="h-1 bg-gray-700">
-            <div 
+            <div
               className="h-full bg-gray-500 transition-all duration-100"
               style={{ width: `${toastProgress}%` }}
             />
@@ -268,7 +309,11 @@ export const EnhancedStudentCard = ({
               />
             ) : (
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xl font-bold border-2 border-gray-600">
-                {student.name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'S'}
+                {student.name
+                  ?.split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .toUpperCase() || "S"}
               </div>
             )}
             <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-white rounded-full border-2 border-[#121212]"></div>
@@ -276,29 +321,37 @@ export const EnhancedStudentCard = ({
 
           {/* Student Info */}
           <div className="flex-1">
-            <h3 className="text-xl font-bold text-white mb-1">{student.name}</h3>
-            <div className="flex items-center gap-3 text-sm text-gray-400">
-              <span className="flex items-center gap-1">
-                <FiMail className="w-3 h-3 text-white" />
-                {student.email}
+            <h3 className="text-xl font-bold text-white mb-1">
+              {student.name}
+            </h3>
+            <div className="flex items-center gap-3 text-sm text-gray-400 min-w-0">
+              <span className="flex items-center gap-1 min-w-0">
+                <FiMail className="w-3 h-3 text-white flex-shrink-0" />
+                <span className="truncate">{student.email}</span>
               </span>
             </div>
-            
+
             {/* Quick Stats */}
-            <div className="flex items-center gap-4 mt-3">
+            <div className="flex items-center flex-wrap gap-3 mt-3">
               <div className="flex items-center gap-1 text-xs">
                 <FiBook className="w-3 h-3 text-white" />
-                <span className="text-white font-semibold">{totalSessions}</span>
+                <span className="text-white font-semibold">
+                  {totalSessions}
+                </span>
                 <span className="text-gray-400">Total</span>
               </div>
               <div className="flex items-center gap-1 text-xs">
                 <FiCheckCircle className="w-3 h-3 text-white" />
-                <span className="text-white font-semibold">{completedSessions}</span>
+                <span className="text-white font-semibold">
+                  {completedSessions}
+                </span>
                 <span className="text-gray-400">Done</span>
               </div>
               <div className="flex items-center gap-1 text-xs">
                 <FiClock className="w-3 h-3 text-white" />
-                <span className="text-white font-semibold">{upcomingSessions}</span>
+                <span className="text-white font-semibold">
+                  {upcomingSessions}
+                </span>
                 <span className="text-gray-400">Upcoming</span>
               </div>
               <div className="flex items-center gap-1 text-xs">
@@ -314,21 +367,29 @@ export const EnhancedStudentCard = ({
       {/* Session Selector */}
       <div className="p-4 bg-[#1a1a1a] border-b border-gray-700">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-semibold text-gray-400">Select Session ({totalSessions} total)</span>
+          <span className="text-sm font-semibold text-gray-400">
+            Select Session ({totalSessions} total)
+          </span>
           <button
             onClick={() => setShowAllSessions(!showAllSessions)}
             className="text-xs text-white hover:text-white flex items-center gap-1"
           >
             {showAllSessions ? (
-              <>Hide All <FiChevronUp className="w-3 h-3 text-white" /></>
+              <>
+                Hide All <FiChevronUp className="w-3 h-3 text-white" />
+              </>
             ) : (
-              <>Show All <FiChevronDown className="w-3 h-3 text-white" /></>
+              <>
+                Show All <FiChevronDown className="w-3 h-3 text-white" />
+              </>
             )}
           </button>
         </div>
 
         {/* Session Pills */}
-        <div className={`flex flex-wrap gap-2 ${showAllSessions ? '' : 'max-h-20 overflow-hidden'}`}>
+        <div
+          className={`flex flex-wrap gap-2 ${showAllSessions ? "" : "max-h-20 overflow-hidden"}`}
+        >
           {sortedSessions.map((session, index) => {
             const sessionTiming = getSessionTiming(session);
             return (
@@ -337,19 +398,33 @@ export const EnhancedStudentCard = ({
                 onClick={() => setSelectedSessionIndex(index)}
                 className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                   selectedSessionIndex === index
-                    ? 'bg-[#1a1a1a] text-white'
-                    : 'bg-[#121212] text-gray-400 hover:text-gray-300'
+                    ? "bg-[#1a1a1a] text-white"
+                    : "bg-[#121212] text-gray-400 hover:text-gray-300"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <FiCalendar className="w-3 h-3" />
-                  <span>{new Date(session.sessionDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                  <span className={`w-2 h-2 rounded-full ${
-                    new Date(session.sessionDate) < new Date() && session.status !== 'completed' && session.status !== 'cancelled' ? 'bg-gray-500' :
-                    session.status === 'confirmed' ? 'bg-white' :
-                    session.status === 'pending' ? 'bg-white' :
-                    session.status === 'completed' ? 'bg-white' : 'bg-gray-400'
-                  }`}></span>
+                  <span>
+                    {new Date(session.sessionDate).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </span>
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      new Date(session.sessionDate) < new Date() &&
+                      session.status !== "completed" &&
+                      session.status !== "cancelled"
+                        ? "bg-gray-500"
+                        : session.status === "confirmed"
+                          ? "bg-white"
+                          : session.status === "pending"
+                            ? "bg-white"
+                            : session.status === "completed"
+                              ? "bg-white"
+                              : "bg-gray-400"
+                    }`}
+                  ></span>
                 </div>
               </button>
             );
@@ -368,25 +443,33 @@ export const EnhancedStudentCard = ({
           <div className="flex items-center gap-3 text-sm">
             <FiBook className="w-4 h-4 text-white" />
             <span className="text-gray-400">Topic:</span>
-            <span className="text-white font-medium">{selectedSession.sessionTitle || 'Mentoring Session'}</span>
+            <span className="text-white font-medium">
+              {selectedSession.sessionTitle || "Mentoring Session"}
+            </span>
           </div>
-          
+
           <div className="flex items-center gap-3 text-sm">
             <FiCalendar className="w-4 h-4 text-white" />
             <span className="text-gray-400">Date:</span>
-            <span className="text-white font-medium">{formatDate(selectedSession.sessionDate)}</span>
+            <span className="text-white font-medium">
+              {formatDate(selectedSession.sessionDate)}
+            </span>
           </div>
 
           <div className="flex items-center gap-3 text-sm">
             <FiClock className="w-4 h-4 text-white" />
             <span className="text-gray-400">Time:</span>
-            <span className="text-white font-medium">{selectedSession.sessionTime} ({selectedSession.duration} min)</span>
+            <span className="text-white font-medium">
+              {selectedSession.sessionTime} ({selectedSession.duration} min)
+            </span>
           </div>
 
           <div className="flex items-center gap-3 text-sm">
             <FiMapPin className="w-4 h-4 text-white" />
             <span className="text-gray-400">Location:</span>
-            <span className="text-white font-medium">{selectedSession.location || 'Online'}</span>
+            <span className="text-white font-medium">
+              {selectedSession.location || "Online"}
+            </span>
           </div>
 
           {/* Status and Countdown */}
@@ -394,14 +477,17 @@ export const EnhancedStudentCard = ({
             <div className="flex items-center gap-3">
               <FiClock className="w-4 h-4 text-white" />
               <span className="text-gray-400">Status:</span>
-              {getStatusBadge(selectedSession.status, selectedSession.sessionDate)}
+              {getStatusBadge(
+                selectedSession.status,
+                selectedSession.sessionDate,
+              )}
             </div>
           </div>
         </div>
 
         {/* Action Buttons */}
         <div className="flex gap-3">
-          {selectedSession.status === 'pending' && (
+          {selectedSession.status === "pending" && (
             <>
               {new Date(selectedSession.sessionDate) < new Date() ? (
                 <button
@@ -432,14 +518,18 @@ export const EnhancedStudentCard = ({
             </>
           )}
 
-          {selectedSession.status === 'confirmed' && (
+          {selectedSession.status === "confirmed" && (
             <>
               <button
                 onClick={() => handleJoinClick(selectedSession)}
                 className="flex-1 bg-[#2a2d32] hover:bg-[#3a3d42] text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
               >
                 <FiVideo className="w-4 h-4" />
-                Join the Session on {formatDate(selectedSession.sessionDate)} at {selectedSession.sessionTime}
+                <span className="hidden sm:inline">
+                  Join the Session on {formatDate(selectedSession.sessionDate)}{" "}
+                  at {selectedSession.sessionTime}
+                </span>
+                <span className="sm:hidden">Join Session</span>
               </button>
               <button
                 onClick={() => onCancelSession(selectedSession)}
@@ -450,7 +540,7 @@ export const EnhancedStudentCard = ({
             </>
           )}
 
-          {selectedSession.status === 'completed' && (
+          {selectedSession.status === "completed" && (
             <button
               disabled
               className="flex-1 bg-gray-700 text-gray-400 px-4 py-2 rounded-lg font-medium cursor-not-allowed"
@@ -459,7 +549,7 @@ export const EnhancedStudentCard = ({
             </button>
           )}
 
-          {selectedSession.status === 'cancelled' && (
+          {selectedSession.status === "cancelled" && (
             <button
               disabled
               className="flex-1 bg-gray-700 text-gray-400 px-4 py-2 rounded-lg font-medium cursor-not-allowed"

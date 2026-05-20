@@ -2,7 +2,7 @@ import React from 'react';
 
 const WritingToolbar = ({ onFormat, onBold, onItalic, onUnderline, onBulletList, onNumberedList, onClear }) => {
   return (
-    <div className="bg-[#1a1a1a] border border-gray-700 rounded-t-lg p-2 flex items-center space-x-1">
+    <div className="bg-[#1a1a1a] border border-gray-700 rounded-t-lg p-2 flex items-center flex-wrap gap-1">
       <button
         onClick={onBold}
         className="p-2 hover:bg-[#2a2a2a] rounded text-gray-300 hover:text-white transition-colors"

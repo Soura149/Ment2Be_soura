@@ -320,7 +320,7 @@ const ProfileHeader = ({ mentorData, isOwnProfile = false, mentorId }) => {
               </div>
               
               {/* Action Buttons */}
-              <div className="flex flex-col justify-start md:justify-end">
+              <div className="flex flex-col justify-start md:justify-end w-full md:w-auto">
                 {isOwnProfile ? (
                   <button className="inline-flex justify-center items-center px-4 py-2 border border-[#444] rounded-md text-sm font-medium text-white bg-[#2d2d2d] hover:bg-[#333] transition-colors">
                     <FiEdit className="h-4 w-4 mr-2" />
