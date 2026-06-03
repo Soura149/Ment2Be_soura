@@ -134,38 +134,29 @@ const PhoneLoginForm = ({ onBack, onNavigateToRegister, role, setRole, isLoading
   };
 
   return (
-    <div className="text-left">
-      {/* Back Button */}
-      <button
-        onClick={onBack}
-        className="flex items-center text-gray-400 hover:text-white mb-6 transition-colors"
-      >
-        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        Back
-      </button>
-
-      {/* Main Heading */}
-      <h1 className="text-3xl font-bold text-white mb-2">Log into Ment2Be</h1>
-      
-      {/* Subtitle */}
-      <p className="text-gray-400 mb-8">
-        New to Ment2Be? Sign up as a{" "}
-        <button 
-          onClick={() => onNavigateToRegister('student')}
-          className="text-blue-400 hover:text-blue-300 font-medium"
-        >
-          student
-        </button>{" "}
-        or apply to be a{" "}
-        <button 
-          onClick={() => onNavigateToRegister('mentor')}
-          className="text-blue-400 hover:text-blue-300 font-medium"
-        >
-          mentor
-        </button>
-      </p>
+    <div className="text-left flex flex-col gap-y-6 pt-12 pb-6">
+      <div className="flex flex-col gap-y-2">
+        {/* Main Heading */}
+        <h1 className="text-3xl font-bold text-white">Log into Ment2Be</h1>
+        
+        {/* Subtitle */}
+        <p className="text-gray-400">
+          New to Ment2Be? Sign up as a{" "}
+          <button 
+            onClick={() => onNavigateToRegister('student')}
+            className="text-blue-400 hover:text-blue-300 font-medium inline"
+          >
+            student
+          </button>{" "}
+          or apply to be a{" "}
+          <button 
+            onClick={() => onNavigateToRegister('mentor')}
+            className="text-blue-400 hover:text-blue-300 font-medium inline"
+          >
+            mentor
+          </button>
+        </p>
+      </div>
 
       {/* Error Display */}
       {error && (

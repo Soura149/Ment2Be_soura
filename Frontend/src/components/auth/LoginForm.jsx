@@ -3,15 +3,13 @@ import ProfileCarousel from "./ProfileCarousel"
 import { useGoogleLogin } from '@react-oauth/google';
 import PhoneLoginForm from './PhoneLoginForm';
 
-const LoginForm = ({ onSubmit, onNavigateToRegister, onGoogleAuth, isLoading }) => {
+const LoginForm = ({ onSubmit, onNavigateToRegister, onGoogleAuth, isLoading, loginMethod, setLoginMethod }) => {
   const [role, setRole] = useState("student");
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [captchaValue, setCaptchaValue] = useState(null);
-  const [showEmailForm, setShowEmailForm] = useState(false);
-  const [showPhoneForm, setShowPhoneForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
@@ -51,40 +49,41 @@ const LoginForm = ({ onSubmit, onNavigateToRegister, onGoogleAuth, isLoading }) 
   };
 
   return (
-    <div className="w-full max-w-md mx-auto text-center max-h-screen overflow-y-auto">
-      {!showEmailForm && !showPhoneForm ? (
-        <>
-          {/* Main Heading */}
-          <h1 className="text-3xl font-bold text-white mb-2">Log into Ment2Be</h1>
+    <div className="w-full max-w-md mx-auto text-center flex flex-col gap-y-6 pt-12 pb-6">
+      {loginMethod === "options" ? (
+        <div className="flex flex-col gap-y-6">
+          {/* Main Heading and Subtitle */}
+          <div className="flex flex-col gap-y-2">
+            <h1 className="text-3xl font-bold text-white">Log into Ment2Be</h1>
+            <p className="text-gray-400 text-sm">
+              New to Ment2Be? Sign up as a{" "}
+              <button 
+                onClick={() => onNavigateToRegister('student')}
+                className="text-blue-400 hover:text-blue-300 font-medium inline"
+              >
+                student
+              </button>{" "}
+              or apply to be a{" "}
+              <button 
+                onClick={() => onNavigateToRegister('mentor')}
+                className="text-blue-400 hover:text-blue-300 font-medium inline"
+              >
+                mentor
+              </button>
+            </p>
+          </div>
           
-          {/* Subtitle */}
-          <p className="text-gray-400 mb-8">
-            New to Ment2Be? Sign up as a{" "}
-            <button 
-              onClick={() => onNavigateToRegister('student')}
-              className="text-blue-400 hover:text-blue-300 font-medium"
-            >
-              student
-            </button>
-            <br />
-            or apply to be a{" "}
-            <button 
-              onClick={() => onNavigateToRegister('mentor')}
-              className="text-blue-400 hover:text-blue-300 font-medium"
-            >
-              mentor
-            </button>
-          </p>
-
           {/* Role Toggle */}
-          <div className="flex text-gray-400 font-medium text-sm mb-6">
+          <div className="flex text-gray-400 font-medium text-sm border-b border-gray-800/60 pb-px">
             <button
+              type="button"
               onClick={() => setRole("student")}
               className={`px-4 pb-2 ${role === "student" ? "border-b-2 border-blue-500 text-white" : "text-gray-500"}`}
             >
               I'm a student
             </button>
             <button
+              type="button"
               onClick={() => setRole("mentor")}
               className={`px-4 pb-2 ${role === "mentor" ? "border-b-2 border-blue-500 text-white" : "text-gray-500"}`}
             >
@@ -93,7 +92,7 @@ const LoginForm = ({ onSubmit, onNavigateToRegister, onGoogleAuth, isLoading }) 
           </div>
 
           {/* Login Buttons */}
-          <div className="space-y-3">
+          <div className="flex flex-col gap-y-3">
             {/* Google Login */}
             <button
               type="button"
@@ -114,7 +113,7 @@ const LoginForm = ({ onSubmit, onNavigateToRegister, onGoogleAuth, isLoading }) 
             <div className="flex gap-3">
               <button
                 type="button"
-                onClick={() => setShowEmailForm(true)}
+                onClick={() => setLoginMethod("email")}
                 className="flex-1 flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white py-3 px-4 rounded border border-gray-700 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -125,7 +124,7 @@ const LoginForm = ({ onSubmit, onNavigateToRegister, onGoogleAuth, isLoading }) 
               
               <button
                 type="button"
-                onClick={() => setShowPhoneForm(true)}
+                onClick={() => setLoginMethod("phone")}
                 className="flex-1 flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white py-3 px-4 rounded border border-gray-700 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -135,58 +134,47 @@ const LoginForm = ({ onSubmit, onNavigateToRegister, onGoogleAuth, isLoading }) 
               </button>
             </div>
           </div>
-        </>
-      ) : showEmailForm ? (
-        <>
-          {/* Email Login Form */}
-          <div className="text-left">
-            {/* Back Button */}
-            <button
-              onClick={() => setShowEmailForm(false)}
-              className="flex items-center text-gray-400 hover:text-white mb-6 transition-colors"
-            >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back
-            </button>
-
-            {/* Main Heading */}
-            <h1 className="text-3xl font-bold text-white mb-2">Log into Ment2Be</h1>
-            
-            {/* Subtitle */}
-            <p className="text-gray-400 mb-8">
+        </div>
+      ) : loginMethod === "email" ? (
+        <div className="text-left flex flex-col gap-y-6">
+          {/* Main Heading and Subtitle */}
+          <div className="flex flex-col gap-y-2">
+            <h1 className="text-3xl font-bold text-white">Log into Ment2Be</h1>
+            <p className="text-gray-400 text-sm">
               New to Ment2Be? Sign up as a{" "}
               <button 
                 onClick={() => onNavigateToRegister('student')}
-                className="text-blue-400 hover:text-blue-300 font-medium"
+                className="text-blue-400 hover:text-blue-300 font-medium inline"
               >
                 student
               </button>{" "}
               or apply to be a{" "}
               <button 
                 onClick={() => onNavigateToRegister('mentor')}
-                className="text-blue-400 hover:text-blue-300 font-medium"
+                className="text-blue-400 hover:text-blue-300 font-medium inline"
               >
                 mentor
               </button>
             </p>
+          </div>
 
-            {/* Role Toggle */}
-            <div className="flex text-gray-400 font-medium text-sm mb-6">
-              <button
-                onClick={() => setRole("student")}
-                className={`px-4 pb-2 ${role === "student" ? "border-b-2 border-blue-500 text-white" : "text-gray-500"}`}
-              >
-                I'm a student
-              </button>
-              <button
-                onClick={() => setRole("mentor")}
-                className={`px-4 pb-2 ${role === "mentor" ? "border-b-2 border-blue-500 text-white" : "text-gray-500"}`}
-              >
-                I'm a mentor
-              </button>
-            </div>
+          {/* Role Toggle */}
+          <div className="flex text-gray-400 font-medium text-sm border-b border-gray-800/60 pb-px">
+            <button
+              type="button"
+              onClick={() => setRole("student")}
+              className={`px-4 pb-2 ${role === "student" ? "border-b-2 border-blue-500 text-white" : "text-gray-500"}`}
+            >
+              I'm a student
+            </button>
+            <button
+              type="button"
+              onClick={() => setRole("mentor")}
+              className={`px-4 pb-2 ${role === "mentor" ? "border-b-2 border-blue-500 text-white" : "text-gray-500"}`}
+            >
+              I'm a mentor
+            </button>
+          </div>
 
             {/* Login Form */}
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -277,10 +265,9 @@ const LoginForm = ({ onSubmit, onNavigateToRegister, onGoogleAuth, isLoading }) 
               </div>
             </form>
           </div>
-        </>
       ) : (
         <PhoneLoginForm
-          onBack={() => setShowPhoneForm(false)}
+          onBack={() => setLoginMethod("options")}
           onNavigateToRegister={onNavigateToRegister}
           role={role}
           setRole={setRole}

@@ -46,40 +46,20 @@ const RegisterForm = ({ onSubmit, onSwitchToLogin, role, isLoading }) => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto text-left">
-      {/* Back Button */}
-      <button
-        onClick={onSwitchToLogin}
-        className="flex items-center text-gray-400 hover:text-white mb-6 transition-colors"
-      >
-        <svg
-          className="w-4 h-4 mr-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
-        Back
-      </button>
-
-      <h1 className="text-2xl font-bold text-white mb-2">Join as a {role}</h1>
-
-      <p className="text-gray-400 mb-6">
-        Already have an account?{" "}
-        <button
-          type="button"
-          onClick={onSwitchToLogin}
-          className="text-blue-400 hover:text-blue-300 font-medium"
-        >
-          Log in
-        </button>
-      </p>
+    <div className="w-full max-w-md mx-auto text-left flex flex-col gap-y-6 pt-12 pb-6">
+      <div className="flex flex-col gap-y-2">
+        <h1 className="text-2xl font-bold text-white">Join as a {role}</h1>
+        <p className="text-gray-400">
+          Already have an account?{" "}
+          <button
+            type="button"
+            onClick={onSwitchToLogin}
+            className="text-blue-400 hover:text-blue-300 font-medium inline"
+          >
+            Log in
+          </button>
+        </p>
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

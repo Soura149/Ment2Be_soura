@@ -19,6 +19,7 @@ const Login = () => {
   const [registerRole, setRegisterRole] = useState("student");
   const [showLoading, setShowLoading] = useState(false);
   const [isProcessingLogin, setIsProcessingLogin] = useState(false);
+  const [loginMethod, setLoginMethod] = useState("options"); // 'options', 'email', 'phone'
 
   useEffect(() => {
     if (error) {
@@ -98,12 +99,17 @@ const Login = () => {
     const user = localStorage.getItem("user");
 
     if (token && user) {
-      const parsedUser = JSON.parse(user);
-
-      if (parsedUser.role === "mentor") {
-        navigate("/mentor/dashboard");
-      } else {
-        navigate("/student/dashboard");
+      try {
+        const parsedUser = JSON.parse(user);
+        if (parsedUser && parsedUser.role === "mentor") {
+          navigate("/mentor/dashboard");
+        } else if (parsedUser) {
+          navigate("/student/dashboard");
+        }
+      } catch (e) {
+        console.error("Error parsing user from localStorage:", e);
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
       }
     }
 
@@ -256,12 +262,24 @@ const Login = () => {
   const handleNavigateToRegister = (role) => {
     setIsRegistering(true);
     setRegisterRole(role);
+    setLoginMethod("options");
     window.history.pushState({}, "", "/register");
   };
 
   const handleSwitchToLogin = () => {
     setIsRegistering(false);
+    setLoginMethod("options");
     window.history.pushState({}, "", "/login");
+  };
+
+  const showBackButton = isRegistering || loginMethod !== "options";
+
+  const handleBack = () => {
+    if (isRegistering) {
+      handleSwitchToLogin();
+    } else {
+      setLoginMethod("options");
+    }
   };
 
   // Loading handled inline, no full screen loading
@@ -289,30 +307,36 @@ const Login = () => {
         </div>
       )}
 
-      {/* Back to Landing Page Button */}
+      {/* Dedicated Global Navigation Header */}
+      <div className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between p-6 md:p-8 pointer-events-none">
+        <div className="flex items-center gap-3 pointer-events-auto">
+          {showBackButton && (
+            <button
+              onClick={handleBack}
+              className="flex items-center gap-2 bg-black/30 px-3 py-2 rounded-lg text-gray-300 hover:text-white transition-colors cursor-pointer"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span className="hidden sm:inline text-sm font-medium">Back</span>
+            </button>
+          )}
           <button
-           onClick={() => navigate("/")}
-           className="fixed top-4 left-4 md:top-6 md:left-6 z-50 flex items-center gap-2 bg-black/30 px-3 py-2 rounded-lg text-gray-300 hover:text-white transition-colors"
-         >
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          />
-        </svg>
-        <span className="text-sm font-medium">Back to Home</span>
-      </button>
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 bg-black/30 px-3 py-2 rounded-lg text-gray-300 hover:text-white transition-colors cursor-pointer"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <span className="hidden sm:inline text-sm font-medium">Back to Home</span>
+            <span className="sm:hidden text-sm font-medium">Home</span>
+          </button>
+        </div>
+      </div>
 
       {/* Left Side - Login/Register Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 relative z-10">
-        <div className="w-full max-w-md">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-8 relative z-10 min-h-screen">
+        <div className="w-full max-w-md mx-auto">
           {isRegistering ? (
             <RegisterForm
               onSubmit={handleRegister}
@@ -326,6 +350,8 @@ const Login = () => {
               onNavigateToRegister={handleNavigateToRegister}
               onGoogleAuth={handleGoogleAuth}
               isLoading={showLoading}
+              loginMethod={loginMethod}
+              setLoginMethod={setLoginMethod}
             />
           )}
 
